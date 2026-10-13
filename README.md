@@ -5,17 +5,23 @@ Type `/kaeru` with your request — whether a few words or a detailed spec. Kaer
 ## Install
 
 ```bash
-# Kaeru
+# Kaeru (planning layer)
 npx skills add kaeruspace/skills --skill kaeru
 
-# Worker skills
-npx skills add addyosmani/agent-skills --skill api-and-interface-design --skill incremental-implementation --skill test-driven-development --skill browser-testing-with-devtools --skill code-simplification --skill debugging-and-error-recovery --skill security-and-hardening --skill frontend-ui-engineering --skill code-review-and-quality
+# Core engineering & planning skills (Addy Osmani)
+npx skills add addyosmani/agent-skills --skill interview-me --skill documentation-and-adrs --skill api-and-interface-design --skill security-and-hardening --skill incremental-implementation --skill test-driven-development --skill debugging-and-error-recovery --skill code-simplification --skill frontend-ui-engineering --skill browser-testing-with-devtools --skill code-review-and-quality
+
+# UI taste & visual styling
 npx skills add Leonxlnx/taste-skill --skill design-taste-frontend --skill high-end-visual-design --skill minimalist-ui
+
+# Pragmatic code & audit (Ponytail)
 npx skills add dietrichgebert/ponytail --skill ponytail --skill ponytail-review --skill ponytail-audit
+
+# Anti-slop writing style
 npx skills add petergyang/no-ai-slop
 ```
 
-If a skill is missing, the worker notes it and carries on without it.
+If a skill is missing, the worker proceeds without it.
 
 ## First run
 

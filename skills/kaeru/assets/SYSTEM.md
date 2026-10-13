@@ -3,7 +3,7 @@
 > **Specification & System Topology**  
 > Last verified: `[git-hash]` `[YYYY-MM-DD]`
 >
-> **Strict Boundary**: Maps current system topology (stack, schema, routes, security, index). Code audits belong in Step 4 Worker Reports.
+> **Strict Boundary**: Maps current system topology (stack, schema, routes, security, index). Code audits belong in Step 4 audits.
 
 ---
 

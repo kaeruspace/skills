@@ -1,6 +1,6 @@
 # PRODUCT.md — Product Vision & Surface Scope
 
-> **Strict Boundary**: Defines product intent, user profiles, and surface scope. Implementation audits and bug lists belong in chat or worker reports.
+> **Strict Boundary**: Defines product intent, user profiles, and surface scope. Implementation audits and bug lists belong in chat or worker escalations.
 
 ---
 

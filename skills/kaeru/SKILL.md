@@ -114,7 +114,7 @@ Workers run silently on success and do not report back to Kaeru. The user only r
 
 ````markdown
 # Plan: [task]
-Run each step in a fresh chat. Verify before next. If a skill is missing, note in Report and continue.
+Run each step in a fresh chat. Verify before next. If a skill is missing, proceed without it.
 
 ### Step 1: Contracts, Schema, Security
 ```markdown
