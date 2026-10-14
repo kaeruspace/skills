@@ -1,58 +1,45 @@
-# SYSTEM.md — Architecture & Codebase Map
+# SYSTEM.md — Architecture & Subtractive Codebase Map
 
-> **Specification & System Topology**  
-> Last verified: `[git-hash]` `[YYYY-MM-DD]`
->
-> **Strict Boundary**: Maps current system topology (stack, schema, routes, security, index). Code audits belong in Step 4 audits.
+> **Specification, System Topology & Subtractive Anchor**  
+> Last verified: `[git-hash]` `[YYYY-MM-DD]` | Relative paths only.  
+> Consult this inventory before writing code: reuse primitives, consolidate duplicates, prune dead weight.
 
 ---
 
 ## 1. Tech Stack & Dependencies
-
-| Layer | Technologies & Dependencies | Purpose / Notes |
-|---|---|---|
-| **Framework & Core** | [e.g. Next.js, React] | [Runtime description] |
-| **Language & Toolchain** | [e.g. TypeScript, Bun/Node] | [Compiler and tooling] |
-| **Database & ORM** | [e.g. Neon PostgreSQL, Drizzle ORM] | [Data persistence] |
-| **Styling & UI** | [e.g. Tailwind CSS] | [Styling engine] |
-| **State & Async** | [e.g. Zustand, TanStack Query] | [State management] |
+- **Runtime / Language**: [Runtime, toolchain, compiler]
+- **Framework & Core**: [Server framework, routing model]
+- **Data & Persistence**: [Database, ORM/driver, cache]
+- **UI & State**: [Styling engine, state primitives]
 
 ---
 
-## 2. Schema & Data Models
-
-Canonical data models, database tables, and validation schemas:
-
-### [Model / Table Name]
-- **`id`**: Primary key
-- **`[field_name]`**: Type, nullability, constraints
-- **`created_at`**: Timestamp
+## 2. Schema & Canonical Models
+[Canonical tables, types, or validation schemas]
 
 ---
 
 ## 3. Routes & Endpoints
-
-| Route / Endpoint | HTTP Method | Type | Primary Responsibilities |
-|---|---|---|---|
-| `/` | `GET` | Page | Main entry point |
-| `/api/[endpoint]` | `POST` | API Route | Validation and persistence |
+[Active routes, endpoints, HTTP methods, and responsibilities]
 
 ---
 
-## 4. Security Boundaries & Permissions
-
-- **Server-Side Validation**: All input clamped and sanitized before processing.
-- **Authentication & Authorization**: Identity verification and access gates.
-- **Fallback & Resilience**: Behavior when external services or environment variables are missing.
+## 4. Security Boundaries & Invariants
+- Server-side validation at trust boundaries; fail fast on invalid state.
+- Authentication/authorization model and permission gates.
 
 ---
 
-## 5. File & Route Index
+## 5. Reusable Primitives (Subtractive Inventory)
+> Check here before writing new functions, schemas, or components:
+- `[Primitive / Helper]`: `[relative/path]` — [Purpose & Usage]
 
-**Header Line:** `Last verified: [git-hash] [YYYY-MM-DD]`
+---
 
-Categorized listing of source files and their structural roles:
-- `app/` or `src/`: Routing and layout entry points.
-- `components/`: UI components and widgets.
-- `lib/` or `utils/`: Shared utilities and domain services.
-- `db/`: Database client, schema, and migrations.
+## 6. Deprecation & Pruning Candidates
+- `[relative/path]`: [Reason for planned deletion; replaced by X]
+
+---
+
+## 7. File & Route Index
+[Categorized relative paths: config, routes, models, libs, components, tests]

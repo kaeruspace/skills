@@ -1,61 +1,31 @@
 # PRODUCT.md — Product Vision & Surface Scope
 
-> **Strict Boundary**: Defines product intent, user profiles, and surface scope. Implementation audits and bug lists belong in chat or worker escalations.
+> **Strict Boundary**: Product intent, user profiles, and surface scope. Grounded at setup and updated progressively.
 
 ---
 
-## 1. Product Vision & Target Audience
-
-### Product Vision
-[What the product is, why it exists, and its core design/engineering philosophy.]
-
-### Target Audience
-1. **Primary Users**: [Who they are and their primary goals.]
-2. **Secondary Users**: [Secondary stakeholders or evaluators.]
-
-### Core Problem & Value
-- **The Problem**: [What specific friction or inefficiency the user faces.]
-- **The Solution**: [How this product solves it with craft and restraint.]
+## 1. Product Vision & Audience
+- **Vision**: [What the product is, why it exists, core philosophy]
+- **Target Users**: [Primary users and core goals]
+- **Core Problem & Solution**: [Friction faced -> Solution delivered with craft]
 
 ---
 
 ## 2. Surface Classification
-
-The product is categorized across ergonomic surfaces:
-
-| Surface Type | Scope within Product | Design & Interaction Doctrine |
+| Surface Type | Scope | Design & Interaction Doctrine |
 |---|---|---|
-| `Persuade` | [Landing, proof points, portfolio] | Proof of craft over assertions, tabular metrics, impact before claims. |
-| `Operate` | [Dashboards, settings, tools, studios] | High tactile responsiveness, deterministic controls, zero friction. |
-| `Read` | [Docs, blog, editorial, dossiers] | High-density readability, comfortable line measure (65ch), calm pacing. |
-| `Experience` | [3D spatial canvas, interactive scenes] | Spatial immersion, tactile physics, unhurried pacing. |
+| `Persuade` | [Landing, proof points] | Proof of craft over assertions, tabular metrics |
+| `Operate` | [Dashboard, tools, studio] | Tactile responsiveness, deterministic controls |
+| `Read` | [Docs, blog, editorial] | High-density readability, line measure 45ch–65ch |
+| `Experience` | [Spatial, interactive scenes] | Spatial immersion, unhurried tactile physics |
 
 ---
 
-## 3. Product Scope & Features
-
-### Core Modules / Stages
-- **[Module 1]**: [Summary of capability and boundaries.]
-- **[Module 2]**: [Summary of capability and boundaries.]
-
-### Non-Goals & Scope Boundaries
-- [Explicitly state what the product does NOT do to prevent scope creep.]
+## 3. Scope Boundaries & Non-Goals
+- **In-Scope Modules**: [Active capabilities and boundaries]
+- **Explicit Non-Goals**: [What the product will NOT do to prevent creep]
 
 ---
 
-## 4. Core User Journeys & Milestones
-
-### Journey 1: [Primary Flow] (Duration: ~[X] min)
-- **Goal**: [What the user wants to accomplish.]
-- **Path**:
-  1. [Step 1]
-  2. [Step 2]
-  3. [Step 3]
-- **Done-When**: [Concrete observable completion state.]
-
-### Journey 2: [Secondary Flow]
-- **Goal**: [What the user wants to accomplish.]
-- **Path**:
-  1. [Step 1]
-  2. [Step 2]
-- **Done-When**: [Concrete observable completion state.]
+## 4. Key User Journeys
+- **[Primary Journey]**: [Goal] -> [Steps 1..N] -> [Observable Done-When]
