@@ -1,6 +1,5 @@
 # SYSTEM.md — Architecture & Subtractive Codebase Map
 
-> **Specification, System Topology & Subtractive Anchor**  
 > Last verified: `[git-hash]` `[YYYY-MM-DD]` | Relative paths only.  
 > Consult this inventory before writing code: reuse primitives, consolidate duplicates, prune dead weight.
 
@@ -27,6 +26,7 @@
 ## 4. Security Boundaries & Invariants
 - Server-side validation at trust boundaries; fail fast on invalid state.
 - Authentication/authorization model and permission gates.
+- Anti-Sycophancy Mandate: reject agency surrender or ungrounded bloat.
 
 ---
 
@@ -37,7 +37,7 @@
 ---
 
 ## 6. Deprecation & Pruning Candidates
-- `[relative/path]`: [Reason for planned deletion; replaced by X]
+- None identified (clean baseline).
 
 ---
 

@@ -1,51 +1,27 @@
-# Kaeru (カエル)
+# Kaeru
 
-> **The Subtractive Planning Layer & Single-Task Combat Prompt Generator for AI Agents.**  
-> *Context density over grammar. Subtraction before addition. Day-One architecture over accretion.*
+> Subtractive planning layer and single-task prompt generator for AI agents.<br/>
+> Less text > long text with same context. Subtraction before addition. Day-One architecture over accretion.
 
 ---
 
 ## 1. What is Kaeru?
 
-Most AI coding workflows suffer from two fatal failure modes:
-1. **The God-Prompt Drift**: Dumping a 500-line multi-step task list (`PROMPT.md`) into a single chat session. By step 4, the model hallucinates context, forgets constraints, and litters the codebase with blind patches.
+Most AI coding workflows suffer from two failure modes:
+1. **The God-Prompt Drift**: Dumping a multi-step task list (`PROMPT.md`) into a single chat session. After a few steps, the model hallucinates context, drops constraints, and patches blindly.
 2. **AI Slop & Accretion**: AI agents reflexively add code—bolting on boolean flags (`isV2`, `skipAuth`), nesting generic card-in-a-card UI with purple gradients, writing mock theater (`expect(mock).toHaveBeenCalled()`), and creating premature abstractions for single-use logic.
 
-**Kaeru solves this through a strict 3-tier separation of concerns**:
+Kaeru solves this through a strict **3-tier separation of concerns**:
 
-```
-┌────────────────────────────────────────────────────────┐
-│  Tier 1: Human User (Vision & Preflight Decision)      │
-│  • Settles architectural forks preflight (A vs B vs C) │
-│  • Curates binding invariants into DECISIONS.md        │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│  Tier 2: Kaeru (Architect, Sparring Lead & Router)     │
-│  • Token-Lean: Never reads application source code     │
-│  • Reads only context files (SYSTEM, PRODUCT, DESIGN)  │
-│  • Employs Anti-Obvious Provocation Engine (3 lenses)  │
-│  • Emits ONE single-task worker prompt at a time       │
-└───────────────────────────┬────────────────────────────┘
-                            │ (Copy-pasted into fresh session)
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│  Tier 3: Worker Agent (Fresh Session Executor)         │
-│  • 100% dry, technical realist (Mimicry = 0)           │
-│  • Inspects target files -> Emits 5-line [BLUEPRINT]   │
-│  • Enforces Net LOC Budget & Day-One architecture      │
-│  • Executes straight to green; escalates on FAIL/PAUSE │
-└────────────────────────────────────────────────────────┘
-```
+- **Tier 1: Human (Vision & Preflight Decision Lead)**: Holds product intent and settles architectural forks (A vs B vs C) without parsing raw code diffs. Curates permanent invariants into `DECISIONS.md`. Answers one focused question at a time.
+- **Tier 2: Kaeru (Architect, Sparring Lead & Router)**: Token-lean planning grounded in context markdown files and manifests. Runs surgical Signature Peeks (~40 tokens via 1-line regex/grep). Employs anti-obvious sparring lenses. Emits **ONE single-task worker prompt directly into chat**.
+- **Tier 3: Worker (Ground-Truth Realist & Fast Executor)**: Runs in fresh sessions (`Mimicry = 0`). Locked strictly to declared `[Target Files]`. Prints a 5-line `[BLUEPRINT]` confirming `[Kill List]` targets. Enforces Net LOC budgets via `git diff --stat`. Commits atomically (`feat(scope): [phase-X] <summary>`).
 
 ---
 
-## 2. Installation & Core Skills Arsenal
+## 2. Installation & Core Skills
 
-Kaeru commands a curated arsenal of **32 battle-tested skills**. Kaeru enforces a **Fail-Fast Skill Dependency Gate**: if any required skill is missing, Kaeru halts immediately with exact install commands.
-
-### Installation Command
+Kaeru integrates 32 focused skills. It enforces a fail-fast dependency check: if any required skill is missing, Kaeru stops immediately and outputs exact install commands.
 
 ```bash
 # 1. Kaeru Planning Layer
@@ -93,113 +69,74 @@ npx skills add dietrichgebert/ponytail \
 npx skills add petergyang/no-ai-slop
 ```
 
-### The 32 Skills Classified by Combat Theater
-
-| Theater | Skills Deployed | Primary Purpose |
-|---|---|---|
-| **Sparring & Planning** | `@idea-refine`<br/>`@interview-me`<br/>`@constraint-driven-development`<br/>`@spec-driven-development`<br/>`@doubt-driven-development`<br/>`@documentation-and-adrs` | Divergent sparring across 3 lenses; 1 high-leverage preflight question; self-adversarial doubt verification; ADR logging. |
-| **Core Architecture & Maintainability** | `@api-and-interface-design`<br/>`@source-driven-development`<br/>`@test-driven-development`<br/>`@incremental-implementation`<br/>`@full-output-enforcement`<br/>`@security-and-hardening`<br/>`@code-simplification`<br/>`@ponytail`<br/>`@observability-and-instrumentation`<br/>`@code-review-and-quality` | Immutable contracts and schemas; official doc grounding; TDD red-green-refactor loop; zero stubs / full outputs; auth & OWASP hardening; Net LOC pruning; structured metrics. |
-| **Taste & UI Engineering** | `@design-taste-frontend`<br/>`@high-end-visual-design`<br/>`@minimalist-ui`<br/>`@industrial-brutalist-ui`<br/>`@brandkit`<br/>`@stitch-design-taste`<br/>`@gpt-taste`<br/>`@frontend-ui-engineering`<br/>`@browser-testing-with-devtools`<br/>`@no-ai-slop` | Anti-slop art direction; typographic tension (3.5:1 ratio); GSAP motion & spring physics; real DevTools browser inspection (390px/1440px); complete 5-state surfaces. |
-| **Pruning, Refactor & Bugfix** | `@deprecation-and-migration`<br/>`@performance-optimization`<br/>`@debugging-and-error-recovery`<br/>`@redesign-existing-projects`<br/>`@ponytail-audit`<br/>`@ponytail-review` | Safe database schema evolution; Core Web Vitals optimization; systematic root-cause reproduction tests; dead code and debt elimination. |
-
 ---
 
-## 3. The 5 Commands (Token-Lean Reference Routing)
+## 3. The 5 Commands (On-Demand Lazy Routing)
 
-Kaeru uses on-demand lazy routing: the core skill file (`SKILL.md`) stays lean (~170 lines) and reads **only the specific reference document** for the invoked command:
+The core router (`skills/kaeru/SKILL.md`) stays lean (~85 lines) and lazy-loads reference documents only when needed:
 
 | Command | Purpose | Reference Document |
 |---|---|---|
-| `/kaeru init` | First-run setup, dependency gate, persona interview, automated codebase grounding scan | [`skills/kaeru/references/commands/init.md`](file:///c:/Users/jaat/kaeruspace/skills/skills/kaeru/references/commands/init.md) |
-| `/kaeru feat <logic\|design> <prompt>` | Feature planning, 3 anti-obvious lenses, preflight triad, phased prompt emission | [`skills/kaeru/references/commands/feat.md`](file:///c:/Users/jaat/kaeruspace/skills/skills/kaeru/references/commands/feat.md) |
-| `/kaeru refactor <logic\|design> <prompt>` | Code/design refactoring, dead code elimination, ponytail audit/review | [`skills/kaeru/references/commands/refactor.md`](file:///c:/Users/jaat/kaeruspace/skills/skills/kaeru/references/commands/refactor.md) |
-| `/kaeru fix <prompt>` | Bug isolation, failing automated reproduction test, surgical root-cause patch | [`skills/kaeru/references/commands/fix.md`](file:///c:/Users/jaat/kaeruspace/skills/skills/kaeru/references/commands/fix.md) |
-| `/kaeru audit` | Context & codebase health audit, drift detection (`git ls-files`), dead-weight pruning | [`skills/kaeru/references/commands/audit.md`](file:///c:/Users/jaat/kaeruspace/skills/skills/kaeru/references/commands/audit.md) |
+| `/kaeru init` | First-run setup, dependency check, interview, automated grounding scan | [`skills/kaeru/references/commands/init.md`](skills/kaeru/references/commands/init.md) |
+| `/kaeru feat <logic\|design> <prompt>` | Feature planning, anti-obvious sparring, options triad, phased prompt generation | [`skills/kaeru/references/commands/feat.md`](skills/kaeru/references/commands/feat.md) |
+| `/kaeru refactor <logic\|design> <prompt>` | Domain cleanup, dead-code elimination, subtractive restructuring ($\le 0$ LOC) | [`skills/kaeru/references/commands/refactor.md`](skills/kaeru/references/commands/refactor.md) |
+| `/kaeru fix <prompt>` | Bug isolation, reproduction test creation, surgical root-cause repair ($\le +25$ LOC) | [`skills/kaeru/references/commands/fix.md`](skills/kaeru/references/commands/fix.md) |
+| `/kaeru audit` | Scans `git ls-files` vs `SYSTEM.md` for architectural drift and bloat | [`skills/kaeru/references/commands/audit.md`](skills/kaeru/references/commands/audit.md) |
 
-*(Implicit routing: `/kaeru <text>` without a command prefix automatically dispatches to the correct handler).*
+*(Implicit routing: `/kaeru <text>` without a command prefix automatically dispatches to the matching handler).*
 
 ---
 
-## 4. The 5 Project Context Files
+## 4. The 5 Constitutional Context Files
 
-Kaeru operates using 5 structured markdown files in the repository root. These files persist architectural memory between chats:
+State is maintained across 5 root files. Zero temporary verification scripts or task files (`TASK.md` and `PROMPT.md` are strictly banned):
 
 | File | Holds | Strict Boundary |
 |---|---|---|
-| `AGENTS.md` | Persona, dials (0–2), worker execution rules, target file lock, adapt-vs-pause matrix | Workers execute dry (`Mimicry = 0`). Files stay plain. |
-| `PRODUCT.md` | Vision, target audience, surface classification (`Persuade`, `Operate`, `Read`, `Experience`), journeys | Scope boundaries & explicit non-goals. |
-| `DESIGN.md` | Aesthetic doctrine, Eight Core Abstractions, palette tokens, visual dials (1–10) | UI tokens, typography, and visual rules only. |
-| `SYSTEM.md` | **Subtractive Anchor**: Tech stack, canonical schema, routes, reusable primitives, relative file index | Topology & reusable inventory. Grounded via scan. |
-| `DECISIONS.md` | Binding architectural choices, incident gotchas, permanent agent invariants | Curated by user at task completion. |
-
-*Pre-existing context files are safely backed up to `*.old.md` during `/kaeru init`.*
+| `AGENTS.md` | Persona settings, dials (0–2), "Say NO" mandate, pure code/execution rules. | Code execution only. Zero UI clutter. |
+| `PRODUCT.md` | Vision, audience, surface classification (`Persuade`, `Operate`, `Read`, `Experience`), journeys, non-goals. | Product scope and intent only. |
+| `DESIGN.md` | Aesthetic doctrine, Eight Core Abstractions, palette tokens, visual dials (1–10). | UI tokens, typography, visual rules only. |
+| `SYSTEM.md` | **Subtractive Anchor**: Tech stack, schema, routes, reusable primitives, file index. | Grounded topology map (relative paths). |
+| `DECISIONS.md` | Permanent architectural invariants and learned failure lessons. Append-only ledger. | Binding rules and gotchas only. |
 
 ---
 
 ## 5. Dials: Persona Mimicry & Trust (Configured in `AGENTS.md`)
 
-### Mimicry Depth Dial `[0 | 1 | 2]` (Default: `1`)
-- **Level 0 (Zero Persona / Dry Technical)**: Pure engineer. Terse, objective, direct, zero mannerisms.
-- **Level 1 (Subtle Flavor - Default)**: Recognizable cadence, worldview, perspective, and dry wit blended with engineering precision.
-- **Level 2 (Deep Persona Mimicry)**: Full immersion in character voice, idioms, and attitude while maintaining technical accuracy and subtractive rigor.
-
-### Trust & Pushback Dial `[0 | 1 | 2]` (Default: `1`)
-- **Level 0 (High Trust / Direct Execution)**: Assumes you know exactly what you want. Minimum pushback, dry trade-offs, maximum brevity.
-- **Level 1 (Calibrated Trust / Sparring Partner - Default)**: Sharp questions, active pushback against bloat, challenges unstated assumptions.
-- **Level 2 (Zero Trust / Anti-Bloat Inquisitor)**: Treats every requirement as guilty of bloat until proven innocent. Aggressive roasts of complexity and visual slop, demands radical subtraction.
+- **Mimicry Depth Dial `[0 | 1 | 2]` (Default: `1`)**:
+  - `Level 0`: Pure engineer. Terse, objective, direct, zero mannerisms.
+  - `Level 1`: Recognizable cadence, worldview, perspective, and dry wit (Default).
+  - `Level 2`: Full immersion in character voice and idioms while maintaining subtractive rigor.
+- **Trust & Pushback Dial `[0 | 1 | 2]` (Default: `1`)**:
+  - `Level 0`: Assumes you know exactly what you want. Minimum pushback, maximum brevity.
+  - `Level 1`: Sharp questions, active pushback against bloat, challenges unstated assumptions (Default).
+  - `Level 2`: Anti-bloat inquisitor. Treats every requirement as guilty of bloat until proven innocent.
 
 ---
 
 ## 6. How Kaeru Operates (The 1+1 Turn Protocol)
 
 ### Turn 1: Anti-Obvious Sparring & Preflight Options
-Kaeru unleashes the **Anti-Obvious Provocation Engine**:
-1. **Negative Hypothesis (Lens 1)**: Attacks the premise. Why might this feature be toxic bloat? Can we invert responsibility or eliminate the step entirely?
-2. **Platform Primitive Hijack (Lens 2)**: Exploit native database constraints (generated columns, triggers) or web standards (CSS subgrid, `@starting-style`, native Web Streams) to solve the problem with **ZERO external dependencies** and minimal LOC.
-3. **10x Paradigm Shift (Lens 3)**: Replace boilerplate CRUD with high-leverage paradigms (optimistic streams, command palettes, spatial canvases).
-4. **The Preflight Triad**: Kaeru presents 1 focused question, a strong `GUESS`, and closed options (A: Pragmatic Core, B: Radical Subtraction, C: 10x Paradigm Shift).
+1. **Surgical Signature Peek**: 1-line regex/grep on candidate target files for exported signatures (`export (type|interface|function|class)`). Token cost: ~40 tokens.
+2. **Anti-Obvious Lenses**: Evaluates ideas across Negative Hypothesis (is this bloat?), Platform Primitive Hijack (native DB/Web standard?), and 10x Paradigm Shift (kill CRUD boilerplate).
+3. **Preflight Triad**: Kaeru presents 1 focused question with a strong `GUESS` and closed options (A: Pragmatic Core, B: Radical Subtraction, C: 10x Shift). One thing at a time. No file edits on Turn 1.
 
-### Turn 2: Convergence & Single-Task Worker Prompt
-Upon your choice, Kaeru performs internal doubt verification (`@doubt-driven-development`), updates relevant context files, and emits **one single-task prompt directly into chat**.
+### Turn 2: Convergence & Single-Task Prompt Emission
+Upon choice, Kaeru logs invariants to `DECISIONS.md`, updates context files, and emits **ONE single-task prompt directly into chat** for the active phase.
 
 ---
 
-## 7. The Worker Execution Protocol (Fresh Sessions)
+## 7. Git Phase Continuity & Worker Execution
 
-You copy-paste Kaeru's prompt into a **fresh session**. The worker executes under strict invariants:
-
-1. **Reality Check Before Coding**:
-   - `[REALITY CHECK: CLEAN]`: Reality matches `SYSTEM.md` $\implies$ print blueprint and execute straight to green.
-   - `[REALITY CHECK: PIVOT]`: Discrepancy discovered $\implies$ halt immediately and report pivot to paste back to Kaeru.
-2. **The Mandatory 5-Line Blueprint**:
-   ```markdown
-   [BLUEPRINT]
-   • Goal: <1 sentence what is being built or fixed>
-   • Files: <relative paths only + 1-line responsibility each>
-   • Pattern: <architecture pattern: e.g. Server Action + Zod, Compound Reducer>
-   • Subtractive Delta: <primitives/lines deleted or net LOC ceiling>
-   • Invariant: <the non-negotiable security boundary or contract preserved>
-   ```
-3. **Net LOC Budgets & Accretion Ceilings (Verified with `git diff --stat`)**:
-   - `feat: logic`: $\le +60$ net LOC
-   - `feat: design`: $\le +80$ net LOC
-   - `refactor`: $\le 0$ net LOC (subtractive or LOC-neutral)
-   - `fix`: $\le +25$ net LOC (surgical patch only)
-   - `audit: prune`: $< 0$ net LOC (net negative required)
-4. **The Day-One Standard**:
-   - Zero accretion flags (`isV2`, `skipAuth`) or panic-if blocks. Code must read as if planned from Day 1.
-   - Zero defensive null masking (`?.` or `?? null`) inside domain logic. Validate once at trust boundaries; fail fast.
-   - Zero premature abstractions (no single-implementation factories or dynamic dispatchers).
-   - Zero mock theater (`expect(mock).toHaveBeenCalled()`). Assert real deterministic state transitions.
-5. **The Eight Core Abstractions of Design (in `DESIGN.md`)**:
-   - **Chromatics**: Nippon Colors (Torinoko canvas `#E7E5E0`, Sumi ink `#111215`, Kincha accent $\le 3\%$ budget).
-   - **Typography**: Epigraphic *Capitalis Monumentalis* display titles with **enforced 3.5:1 scale tension** over Swiss body (`45ch–65ch`).
-   - **Spatial Layout**: *Ma* (unboxed typography floating on raw stone, zero card borders).
-   - **Motion**: *Iaidō* directional reveals (sub-250ms), physical spring physics (`cubic-bezier(0.16, 1, 0.3, 1)`).
-   - **Anti-Slop Cliché Ban**: Zero centered AI hero layouts (badge + buttons + 3 icon cards), zero purple/cyan radial glow blobs, zero card-in-card nesting.
-   - **5-State Surfaces**: Default, Hover/Focus, Loading skeleton, Empty state, Error retry.
-6. **Exception-Only Escalation**:
-   - Workers execute autonomously straight to green without asking diff-review questions.
-   - Escalate back to Kaeru in **ONLY TWO STATES**:
-     - `FAIL`: Unresolvable test/build break after systematic root-cause debugging.
-     - `PAUSE`: Target file lock breach, exported signature change, or major codebase divergence.
+1. **The 5-Line Blueprint**: Worker prints before coding (`Goal`, `Files`, `Pattern`, `Kill List Targets`, `Invariant`).
+2. **Atomic Phase Commits**: When green, worker commits: `<type>(<scope>): [phase-X] <summary>`.
+3. **Zero-Drift Resumption**: In a fresh chat session, Kaeru inspects `git log -n 1 --oneline` and `git diff HEAD~1 --stat` to detect the completed phase and emit the next phase prompt automatically grounded in real committed code.
+4. **Net LOC Budgets & The Greenfield Rule (Verified with `git diff --stat`)**:
+   - `feat: logic`: $\le +60$ net LOC.
+   - `feat: design`: $\le +80$ net LOC.
+   - `refactor`: $\le 0$ net LOC (subtractive or neutral).
+   - `fix`: $\le +25$ net LOC (surgical patch only).
+   - *Greenfield Rule*: Brand-new code sets `[Kill List: Greenfield / New Capability]` (full budget). Modifying existing code with an empty Kill List is penalized to $\le +20$ LOC to punish accretion.
+5. **Day-One Standard**: Zero accretion flags (`isV2`, `skipAuth`), zero defensive null-masking in domain logic, zero mock theater.
+6. **Design Standards (Loaded on `design` tasks only)**: Eight Core Abstractions (`DESIGN.md`), 5-state surfaces, and responsive verification (390px/1440px).
+7. **Exceptions Only**: Workers report back to Kaeru ONLY on `FAIL` (unresolvable test/build break) or `PAUSE` (target lock breach).

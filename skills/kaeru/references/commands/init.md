@@ -1,6 +1,6 @@
 # Kaeru Command: `init`
 
-First-run setup and automated codebase grounding protocol.
+First-run setup, dependency check, and automated codebase grounding protocol.  
 Triggered via `/kaeru init` or when context files are missing.
 
 ---
@@ -11,11 +11,11 @@ Triggered via `/kaeru init` or when context files are missing.
 If `AGENTS.md`, `PRODUCT.md`, `SYSTEM.md`, `DESIGN.md`, or `DECISIONS.md` exist, rename to `*.old.md` to preserve prior context.
 
 ### 2. Skill Dependency Gate (Fail Fast)
-Verify core skills exist in `.agents/skills/` (planning, engineering, taste, refactoring).
-If ANY required skill is missing, **FAIL FAST immediately** and output `[KAERU DEPENDENCY GATE: BLOCKED]` with install commands from README.md. Halt until present.
+Verify core skills exist in `.agents/skills/` (planning, engineering, taste, refactoring).  
+If ANY required skill is missing, **FAIL FAST immediately** with `[KAERU DEPENDENCY GATE: BLOCKED]` and output exact install commands. Halt until present.
 
 ### 3. Preflight Setup Interview (`@interview-me`)
-Prompt the user:
+Ask one focused question at a time:
 ```markdown
 ### Kaeru Setup & Mission Alignment
 1. Persona & Mimicry Dial [0 | 1 | 2]: Character name, depth (0 = dry, 1 = subtle [Default], 2 = deep persona).

@@ -22,8 +22,8 @@
 ---
 
 ## 3. Scope Boundaries & Non-Goals
-- **In-Scope Modules**: [Active capabilities and boundaries]
-- **Explicit Non-Goals**: [What the product will NOT do to prevent creep]
+- **In-Scope Modules**: [Active capabilities and structural boundaries]
+- **Explicit Non-Goals**: [What the product will NOT do; explicitly declare banned abstractions, rejected features, and zero-accretion boundaries to prevent creep]
 
 ---
 
