@@ -1,33 +1,45 @@
 # Kaeru
 
-> Subtractive planning layer and single-task prompt generator for AI agents.<br/>
-> Less text > long text with same context. Subtraction before addition. Day-One architecture over accretion.
+> Subtractive planning layer and prompt generator for AI agents.  
+> Signal density > narrative volume. Strip conversational fluff, never truncate operational protocols.
 
 ---
 
 ## 1. What is Kaeru?
 
-Most AI coding workflows suffer from two failure modes:
-1. **The God-Prompt Drift**: Dumping a multi-step task list (`PROMPT.md`) into a single chat session. After a few steps, the model hallucinates context, drops constraints, and patches blindly.
-2. **AI Slop & Accretion**: AI agents reflexively add code—bolting on boolean flags (`isV2`, `skipAuth`), nesting generic card-in-a-card UI with purple gradients, writing mock theater (`expect(mock).toHaveBeenCalled()`), and creating premature abstractions for single-use logic.
+Most agentic workflows fail from **prompt drift** and **code accretion**: models lose context over long sessions, introduce premature abstractions, duplicate existing utilities, and hoard dead code.
 
-Kaeru solves this through a strict **3-tier separation of concerns**:
+Kaeru splits engineering into three distinct roles:
 
-- **Tier 1: Human (Vision & Preflight Decision Lead)**: Holds product intent and settles architectural forks (A vs B vs C) without parsing raw code diffs. Curates permanent invariants into `DECISIONS.md`. Answers one focused question at a time.
-- **Tier 2: Kaeru (Architect, Sparring Lead & Router)**: Token-lean planning grounded in context markdown files and manifests. Runs surgical Signature Peeks (~40 tokens via 1-line regex/grep). Employs anti-obvious sparring lenses. Emits **ONE single-task worker prompt directly into chat**.
-- **Tier 3: Worker (Ground-Truth Realist & Fast Executor)**: Runs in fresh sessions (`Mimicry = 0`). Locked strictly to declared `[Target Files]`. Prints a 5-line `[BLUEPRINT]` confirming `[Kill List]` targets. Enforces Net LOC budgets via `git diff --stat`. Commits atomically (`feat(scope): [phase-X] <summary>`).
+- **You (Human)**: Sets product vision, decides architecture, and curates binding rules in `RULES.md`.
+- **Kaeru (In Chat)**: Discovers intent, spars on technical directions, checks exported signatures (~40 tokens), and emits single-task worker prompts. Never writes implementation code.
+- **Worker (Fresh Session)**: Silent executor (`Personality = 0`). Locked to declared `[Target Files]`, follows `RULES.md`, prints a 5-line `[BLUEPRINT]`, respects Net LOC limits, and commits atomically.
 
 ---
 
-## 2. Installation & Core Skills
+## 2. The 5 Root Files
 
-Kaeru integrates 32 focused skills. It enforces a fail-fast dependency check: if any required skill is missing, Kaeru stops immediately and outputs exact install commands.
+State lives in 5 project files. Never create temporary task files or scratch scripts:
+
+| File | Holds | Strict Boundary |
+|---|---|---|
+| `PRODUCT.md` | Product vision, in-scope capabilities, surface classification, non-goals. | Scope and intent only. |
+| `CODEBASE.md` | Tech stack, directory topology, reusable primitives, conventions. | Codebase map (relative paths). |
+| `DESIGN.md` | Master palette tokens, contrast rules, banned UI tropes, layout constraints. | Visual tokens and layout rules. |
+| `RULES.md` | Architectural invariants, Net LOC budgets, and clean-code rules. | Binding rules; curated by human. |
+| `AGENTS.md` | Persona settings, dials, and interaction style. | Persona and roles only. |
+
+---
+
+## 3. Installation
+
+Kaeru coordinates 28 active skills across planning, engineering, taste, subtraction, and anti-slop writing:
 
 ```bash
-# 1. Kaeru Planning Layer
+# Kaeru Planning Layer
 npx skills add kaeruspace/skills --skill kaeru
 
-# 2. Planning, Core Engineering & Quality (Addy Osmani)
+# Core Engineering & Planning
 npx skills add addyosmani/agent-skills \
   --skill interview-me \
   --skill documentation-and-adrs \
@@ -49,94 +61,126 @@ npx skills add addyosmani/agent-skills \
   --skill idea-refine \
   --skill observability-and-instrumentation
 
-# 3. Taste, UI Systems & Full Output Enforcement (Leonxlnx)
+# Taste, Systems & Output Enforcement
 npx skills add Leonxlnx/taste-skill \
   --skill design-taste-frontend \
   --skill high-end-visual-design \
   --skill minimalist-ui \
-  --skill industrial-brutalist-ui \
-  --skill brandkit \
-  --skill full-output-enforcement \
-  --skill redesign-existing-projects
+  --skill redesign-existing-projects \
+  --skill full-output-enforcement
 
-# 4. Pragmatic Subtraction, Auditing & Debt Reduction (Dietrich Gebert)
+# Subtraction, Review & Audit
 npx skills add dietrichgebert/ponytail \
   --skill ponytail \
   --skill ponytail-review \
   --skill ponytail-audit
 
-# 5. Anti-Slop Writing & Logic De-slop (Peter Yang)
+# Anti-Slop Writing
 npx skills add petergyang/no-ai-slop
 ```
 
 ---
 
-## 3. The 5 Commands (On-Demand Lazy Routing)
+## 4. Commands & Auto-Routing
 
-The core router (`skills/kaeru/SKILL.md`) stays lean (~85 lines) and lazy-loads reference documents only when needed:
+Invoke with `/kaeru` or `/kaeru <command>`.
 
-| Command | Purpose | Reference Document |
-|---|---|---|
-| `/kaeru init` | First-run setup, dependency check, interview, automated grounding scan | [`skills/kaeru/references/commands/init.md`](skills/kaeru/references/commands/init.md) |
-| `/kaeru feat <logic\|design> <prompt>` | Feature planning, anti-obvious sparring, options triad, phased prompt generation | [`skills/kaeru/references/commands/feat.md`](skills/kaeru/references/commands/feat.md) |
-| `/kaeru refactor <logic\|design> <prompt>` | Domain cleanup, dead-code elimination, subtractive restructuring ($\le 0$ LOC) | [`skills/kaeru/references/commands/refactor.md`](skills/kaeru/references/commands/refactor.md) |
-| `/kaeru fix <prompt>` | Bug isolation, reproduction test creation, surgical root-cause repair ($\le +25$ LOC) | [`skills/kaeru/references/commands/fix.md`](skills/kaeru/references/commands/fix.md) |
-| `/kaeru audit` | Scans `git ls-files` vs `SYSTEM.md` for architectural drift and bloat | [`skills/kaeru/references/commands/audit.md`](skills/kaeru/references/commands/audit.md) |
+### Command Matrix
 
-*(Implicit routing: `/kaeru <text>` without a command prefix automatically dispatches to the matching handler).*
+| Command | Focus | Primary & Guard Skills | Net LOC Budget |
+|---|---|---|---|
+| `/kaeru init` | Back up context, verify skills, scan codebase | Dependency Gate + Codebase grounding scan | 0 lines |
+| `/kaeru feat logic <prompt>` | Spec $\to$ TDD $\to$ Harden | Phase 1: `@spec-driven-development` + `@api-and-interface-design` (Guard: `@constraint-driven-development`)<br/>Phase 2: `@test-driven-development` + `@incremental-implementation`<br/>Phase 3: `@security-and-hardening` + `@performance-optimization` + `@observability-and-instrumentation` (Review: `@ponytail-review`) | $\le +60$ lines |
+| `/kaeru feat design <prompt>` | Tokens $\to$ UI $\to$ Polish | Phase 1: `@design-taste-frontend` + `@no-ai-slop`<br/>Phase 2: `@frontend-ui-engineering` + `@browser-testing-with-devtools`<br/>Phase 3: Surface-adaptive: `Persuade` $\to$ `@high-end-visual-design`; `Operate` $\to$ `@minimalist-ui` (Review: `@code-review-and-quality`) | $\le +80$ lines |
+| `/kaeru refactor logic <prompt>` | Clean internals & prune dead code | `@ponytail` + `@code-simplification` + `@deprecation-and-migration` (Guard: `@doubt-driven-development`). Zero CSS/markup edits. | $\le 0$ lines |
+| `/kaeru refactor design <prompt>` | Migrate tokens & flatten UI hierarchy | `@redesign-existing-projects` + `@frontend-ui-engineering` (Guard: `@browser-testing-with-devtools`). Zero logic/state edits. | $\le 0$ lines |
+| `/kaeru fix <prompt>` | Reproduction test + root-cause patch | `@debugging-and-error-recovery` + `@test-driven-development` + `@incremental-implementation` | $\le +25$ lines |
+| `/kaeru audit` | Detect drift, duplicate helpers, and dead weight | `@ponytail-audit` + `@doubt-driven-development` | $< 0$ lines |
 
----
+### Implicit Natural Language Routing
 
-## 4. The 5 Constitutional Context Files
-
-State is maintained across 5 root files. Zero temporary verification scripts or task files (`TASK.md` and `PROMPT.md` are strictly banned):
-
-| File | Holds | Strict Boundary |
-|---|---|---|
-| `AGENTS.md` | Persona settings, dials (0–2), "Say NO" mandate, pure code/execution rules. | Code execution only. Zero UI clutter. |
-| `PRODUCT.md` | Vision, audience, surface classification (`Persuade`, `Operate`, `Read`, `Experience`), journeys, non-goals. | Product scope and intent only. |
-| `DESIGN.md` | Aesthetic doctrine, Eight Core Abstractions, palette tokens, visual dials (1–10). | UI tokens, typography, visual rules only. |
-| `SYSTEM.md` | **Subtractive Anchor**: Tech stack, schema, routes, reusable primitives, file index. | Grounded topology map (relative paths). |
-| `DECISIONS.md` | Permanent architectural invariants and learned failure lessons. Append-only ledger. | Binding rules and gotchas only. |
+When invoked as `/kaeru <prompt>` without an explicit command prefix:
+- **Missing context files (`CODEBASE.md`, `RULES.md`)** $\implies$ `/kaeru init`
+- **Bug, crash, broken test, regression** $\implies$ `/kaeru fix`
+- **Refactor, cleanup, dead code, simplify** $\implies$ `/kaeru refactor <logic|design>`
+- **Audit, drift, bloat inspection** $\implies$ `/kaeru audit`
+- **New feature, route, schema, UI screen** $\implies$ `/kaeru feat <logic|design>`
+- **Trivial change ($\le 10$ LOC, typo)** $\implies$ Fast-path bypass (direct prompt emission)
 
 ---
 
-## 5. Dials: Persona Mimicry & Trust (Configured in `AGENTS.md`)
+## 5. How Kaeru Operates (The 1+1 Turn Protocol)
 
-- **Mimicry Depth Dial `[0 | 1 | 2]` (Default: `1`)**:
-  - `Level 0`: Pure engineer. Terse, objective, direct, zero mannerisms.
-  - `Level 1`: Recognizable cadence, worldview, perspective, and dry wit (Default).
-  - `Level 2`: Full immersion in character voice and idioms while maintaining subtractive rigor.
-- **Trust & Pushback Dial `[0 | 1 | 2]` (Default: `1`)**:
-  - `Level 0`: Assumes you know exactly what you want. Minimum pushback, maximum brevity.
-  - `Level 1`: Sharp questions, active pushback against bloat, challenges unstated assumptions (Default).
-  - `Level 2`: Anti-bloat inquisitor. Treats every requirement as guilty of bloat until proven innocent.
+### Fast-Path Bypass ($\le 10$ LOC)
+Tasks modifying $\le 10$ net lines (typos, single config tweaks) or flagged `--direct` bypass multi-turn sparring and emit a 1-step direct worker prompt immediately.
 
----
+### Turn 1: Direction Discovery & Anti-Obvious Sparring
+1. **Intent & Signature Check** (`@interview-me`): Clarify underlying intent with at most 1 focused question. Run a 1-line regex/grep on candidate files for exported signatures (~40 tokens). Never read implementation code bodies during planning.
+2. **Anti-Obvious Lenses** (`@idea-refine`, `@source-driven-development`):
+   - *Negative Hypothesis*: Is this feature bloat? Can we eliminate the requirement or invert responsibility?
+   - *Platform Primitive Hijack*: What DB constraint or Web standard solves this with 0 extra packages?
+   - *10x Paradigm Shift*: Replace boilerplate CRUD with direct manipulation, streaming, or local-first architecture.
+3. **Unrigged Architectural Directions**: Present 2–3 distinct technical directions. For each, articulate **Concept**, concrete **Mechanics** (data flow and relative file touch points), and explicit **Trade-offs**. Zero file edits on Turn 1.
 
-## 6. How Kaeru Operates (The 1+1 Turn Protocol)
-
-### Turn 1: Anti-Obvious Sparring & Preflight Options
-1. **Surgical Signature Peek**: 1-line regex/grep on candidate target files for exported signatures (`export (type|interface|function|class)`). Token cost: ~40 tokens.
-2. **Anti-Obvious Lenses**: Evaluates ideas across Negative Hypothesis (is this bloat?), Platform Primitive Hijack (native DB/Web standard?), and 10x Paradigm Shift (kill CRUD boilerplate).
-3. **Preflight Triad**: Kaeru presents 1 focused question with a strong `GUESS` and closed options (A: Pragmatic Core, B: Radical Subtraction, C: 10x Shift). One thing at a time. No file edits on Turn 1.
-
-### Turn 2: Convergence & Single-Task Prompt Emission
-Upon choice, Kaeru logs invariants to `DECISIONS.md`, updates context files, and emits **ONE single-task prompt directly into chat** for the active phase.
+### Turn 2: Micro-Spec, Doubt Gate & Prompt Emission
+1. **Micro-Spec** (`@spec-driven-development`): Formulate `[Target Files]`, `[Assigned Skills]`, `[Objective]`, `[Kill List]`, `[Net LOC Budget]`, and `[Not-Doing]`.
+2. **Pre-Emission Doubt Gate** (`@doubt-driven-development`):
+   - *Grounding*: Are signatures verified (~40 tokens) without unverified assumptions about `CODEBASE.md`?
+   - *Subtractive Anchor*: Is there an explicit `[Kill List]`? (Modifying existing code without deletions caps budget to $\le +20$).
+   - *Chesterton's Fence*: Are existing tests preserved and edits strictly bounded to `[Target Files]`?
+3. **Emit Prompt**: Log new invariants to `RULES.md`, update context files if scope changed, and emit the canonical worker prompt into chat.
 
 ---
 
-## 7. Git Phase Continuity & Worker Execution
+## 6. Canonical Worker Prompt & Execution
 
-1. **The 5-Line Blueprint**: Worker prints before coding (`Goal`, `Files`, `Pattern`, `Kill List Targets`, `Invariant`).
-2. **Atomic Phase Commits**: When green, worker commits: `<type>(<scope>): [phase-X] <summary>`.
-3. **Zero-Drift Resumption**: In a fresh chat session, Kaeru inspects `git log -n 1 --oneline` and `git diff HEAD~1 --stat` to detect the completed phase and emit the next phase prompt automatically grounded in real committed code.
-4. **Net LOC Budgets & The Greenfield Rule (Verified with `git diff --stat`)**:
-   - `feat: logic`: $\le +60$ net LOC.
-   - `feat: design`: $\le +80$ net LOC.
-   - `refactor`: $\le 0$ net LOC (subtractive or neutral).
-   - `fix`: $\le +25$ net LOC (surgical patch only).
-   - *Greenfield Rule*: Brand-new code sets `[Kill List: Greenfield / New Capability]` (full budget). Modifying existing code with an empty Kill List is penalized to $\le +20$ LOC to punish accretion.
-5. **Day-One Standard**: Zero accretion flags (`isV2`, `skipAuth`), zero defensive null-masking in domain logic, zero mock theater.
-6. **Design Standards (Loaded on `design` tasks only)**: Eight Core Abstractions (`DESIGN.md`), 5-state surfaces, and responsive verification (390px/1440px).
-7. **Exceptions Only**: Workers report back to Kaeru ONLY on `FAIL` (unresolvable test/build break) or `PAUSE` (target lock breach).
+### Canonical Worker Prompt Schema
+
+Every execution phase emits this prompt into chat for a fresh-session worker agent:
+
+```markdown
+# TASK: <type>(<scope>): <Title> [Phase X]
+[Target Files]: <relative paths from repo root>
+[Assigned Skills]:
+- Primary: <skill>
+- Guard: <skill>
+- Review: <skill>
+- Invariant: @full-output-enforcement (zero stubs, complete drop-in execution)
+
+[Objective]: <Clear, unambiguous outcome for this phase>
+[Kill List]: <Greenfield / New Capability OR exact symbols/files to delete>
+[Net LOC Budget]: <= <budget> lines (verified via git diff --stat)
+[Not-Doing]: <explicit boundary cuts and non-goals>
+
+Read: RULES.md, CODEBASE.md, AGENTS.md. [If design: DESIGN.md]
+Protocol:
+1. REALITY CHECK: Verify Target Files match CODEBASE.md. Output [REALITY CHECK: CLEAN] or [REALITY CHECK: PIVOT].
+2. BLUEPRINT: Print 5-line [BLUEPRINT] confirming [Kill List] targets, then execute immediately.
+3. EXECUTE: Follow assigned skills and clean-code rules. Modify only declared [Target Files].
+4. VERIFY & COMMIT: Run test suite. Verify Net LOC with `git diff --stat`. Commit atomically: `<type>(<scope>): [phase-X] <summary>`. Escalate only on FAIL or PAUSE.
+5. CURATE: If unexpected gotchas or non-obvious fixes occurred, output candidate invariant:
+   [CANDIDATE INVARIANT FOR RULES.md]
+   • Gotcha: <what failed or misled>
+   • Rule: <imperative rule with relative paths>
+   Save to RULES.md? (Reply "Y" to append, or Enter to skip)
+```
+
+### The 5-Line Blueprint
+
+Before modifying code, workers print this blueprint without waiting for user approval:
+
+```markdown
+[BLUEPRINT]
+• Goal: <1 sentence what is being built or fixed>
+• Files: <relative paths + 1-line responsibility each>
+• Pattern: <architecture pattern: e.g. Server Action + Zod, Compound Reducer>
+• Kill List Targets: <exact symbols or files confirmed for deletion>
+• Invariant: <security rule or interface contract preserved>
+```
+
+### Native Git Phase Continuity
+
+When resuming a multi-phase task in a fresh session:
+1. Kaeru checks `git log -n 1 --oneline` and `git diff HEAD~1 --stat`.
+2. Identifies the completed phase directly from committed history.
+3. Emits the next phase prompt from git state. Zero temporary state files or transcript dumps.

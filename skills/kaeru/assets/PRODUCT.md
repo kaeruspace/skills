@@ -1,31 +1,34 @@
-# PRODUCT.md — Product Vision & Surface Scope
+# PRODUCT.md: Product Intent & Scope
 
-> **Strict Boundary**: Product intent, user profiles, and surface scope. Grounded at setup and updated progressively.
-
----
-
-## 1. Product Vision & Audience
-- **Vision**: [What the product is, why it exists, core philosophy]
-- **Target Users**: [Primary users and core goals]
-- **Core Problem & Solution**: [Friction faced -> Solution delivered with craft]
+> [!IMPORTANT]
+> **TEMPLATE NOTICE**: This file is a starter template. When initializing Kaeru in an actual project, update all data according to your project specifications and remove this notice once configured.
 
 ---
 
-## 2. Surface Classification
-| Surface Type | Scope | Design & Interaction Doctrine |
-|---|---|---|
-| `Persuade` | [Landing, proof points] | Proof of craft over assertions, tabular metrics |
-| `Operate` | [Dashboard, tools, studio] | Tactile responsiveness, deterministic controls |
-| `Read` | [Docs, blog, editorial] | High-density readability, line measure 45ch–65ch |
-| `Experience` | [Spatial, interactive scenes] | Spatial immersion, unhurried tactile physics |
+## 1. The Product & Vision
+- **What It Is**: [1-2 sentences: simple plain-language description of what the product is and who it serves.]
+- **Core Value**: [The primary problem it solves and why it exists.]
+- **Audience**: [Primary target users and their core motivation.]
 
 ---
 
-## 3. Scope Boundaries & Non-Goals
-- **In-Scope Modules**: [Active capabilities and structural boundaries]
-- **Explicit Non-Goals**: [What the product will NOT do; explicitly declare banned abstractions, rejected features, and zero-accretion boundaries to prevent creep]
+## 2. In-Scope Capabilities
+- **[Capability / Module 1]**: [Brief description of what it does]
+- **[Capability / Module 2]**: [Brief description of what it does]
+- **[Capability / Module 3]**: [Brief description of what it does]
 
 ---
 
-## 4. Key User Journeys
-- **[Primary Journey]**: [Goal] -> [Steps 1..N] -> [Observable Done-When]
+## 3. Explicit Non-Goals (Out of Scope)
+- [What the product will strictly NOT do; ban creeping features, unnecessary abstractions, and bloat]
+- [Secondary use case explicitly deferred or rejected]
+- [Third-party integration or complexity not supported]
+
+---
+
+## 4. Surface Classification
+- **Primary Surface**: `[Persuade | Operate | Read | Experience]`
+  - `Persuade`: Landing pages, marketing showcases; proof of craft over assertions (`@high-end-visual-design`).
+  - `Operate`: Dashboards, developer tools, studio interfaces; tactile responsiveness, flat bento, tabular telemetry (`@minimalist-ui`).
+  - `Read`: Documentation, technical articles, editorial; high-density readability (45ch–65ch measure).
+  - `Experience`: Interactive spatial scenes, creative portfolios; kinetic motion and fluid physics (`@high-end-visual-design`).
