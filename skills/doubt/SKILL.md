@@ -1,51 +1,60 @@
 ---
 name: doubt
-description: Adversarial review for non-trivial decisions, plans, and code. Disproves assumptions using an isolated reviewer before changes take effect.
+description: Isolated adversarial review before committing or finalizing non-trivial changes. Use when changing branching logic or boundaries, asserting concurrency or ordering invariants, making irreversible changes, editing unfamiliar code, or claiming a non-obvious property.
 ---
 
 # Doubt
 
-Context turns assumptions into accepted facts over long sessions. High confidence does not guarantee correctness. Doubt runs an in-flight adversarial review to disprove claims before non-trivial changes take effect.
+Run an isolated adversarial review to disprove claims on non-trivial decisions before committing or finalizing changes.
 
 ## When to use
 
-Use Doubt when a decision is non-trivial:
-- Branching logic or state transitions change.
-- Code crosses module, network, or storage boundaries.
-- Logic asserts invariants that compilers cannot check, such as concurrency, ordering, or idempotence.
-- Blast radius is irreversible, such as schema migrations, public API updates, or production deployments.
-- The author edits code without full understanding.
+Use Doubt when a decision meets any of these conditions:
 
-Skip Doubt for routine operations:
-- File renames, formatting, or moves.
-- Straightforward edits following clear user instructions.
-- File inspections and summaries.
-- Low-risk edits verified by direct tests.
+- It adds or changes branching logic or state transitions.
+- It crosses module, service, network, or storage boundaries.
+- It asserts an invariant the compiler or type system cannot check, such as concurrency, ordering, or idempotence.
+- Its impact is irreversible, such as a schema migration, a public API change, or a production deploy.
+- The author edits code without full understanding.
+- The author claims a non-obvious property, such as safety, scale, or spec compliance.
+
+Skip routine edits, renames, formatting, file reads, and test runs.
+
+Run Doubt from the main session so Step 3 can spawn an isolated reviewer. Inside a subagent that cannot spawn another, escalate to the user or run a self-review of the artifact and contract and mark it degraded.
 
 ## The review cycle
 
 ### 1. State the claim
-Write the decision and its operational risk in two lines:
+
+Write the decision and its failure risk in two lines:
+
+```text
 CLAIM: Expected behavior and scope.
-RISK: Concrete failure mode if this claim is wrong.
+RISK: Concrete failure mode if the claim is wrong.
+```
 
 If you cannot state the claim in two lines, clarify the decision before proceeding.
 
-### 2. Extract artifact and contract
-Isolate the work into two components:
-- Artifact. The isolated diff, function, or proposal. Keep the size small enough to read in one pass. Decompose larger changes before review.
-- Contract. Explicit constraints, requirements, and invariants the artifact must satisfy.
+This step is complete when the claim and failure risk fit in two lines.
 
-Strip all personal reasoning, history, and justification. Author rationalizations bias the reviewer toward agreement.
+### 2. Extract artifact and contract
+
+Isolate the review unit into two parts:
+
+- **Artifact.** The isolated diff, function, or proposal. Keep it small enough to read in one pass. Decompose larger changes before review.
+- **Contract.** Explicit constraints, requirements, and invariants the artifact must satisfy.
+
+Include contradicting evidence such as callers, guards, or failing tests. Strip your own reasoning and history so the reviewer evaluates the artifact without bias.
+
+This step is complete when the isolated unit contains only the artifact, the contract, and relevant evidence.
 
 ### 3. Run adversarial doubt
-Invoke an isolated reviewer subagent or open a clean session.
 
-Pass only the artifact and the contract. Never pass the claim or internal rationale. The reviewer must evaluate the material independently.
+Invoke an isolated reviewer subagent or open a clean session. Pass only the artifact and the contract. Keep the claim and your rationale out of the prompt so the reviewer forms an independent judgment.
 
-Use this prompt:
+Use this prompt verbatim so it overrides any balanced summary default:
 
-```
+```text
 Adversarial review. Find every flaw, unhandled edge case, and false assumption in this artifact under the contract.
 Assume the author is overconfident. Look for:
 - Unstated assumptions that fail
@@ -53,9 +62,9 @@ Assume the author is overconfident. Look for:
 - Hidden coupling, shared state, or side effects
 - Direct contract violations
 - Broken conventions
-- Failure modes under heavy load or invalid input
+- Failure modes under unexpected input or heavy load
 
-Do not summarize. Do not validate strengths. Report concrete issues only, or state that thorough inspection found none.
+Report concrete issues only, or state that thorough inspection found none. Do not summarize or validate strengths.
 
 Artifact:
 <paste artifact>
@@ -64,25 +73,26 @@ Contract:
 <paste contract>
 ```
 
+This step is complete when the reviewer returns an issues-only report or confirms that thorough inspection found no issues.
+
 ### 4. Reconcile findings
-Reviewer feedback is raw data, not a final verdict. The reviewer lacks broader context. Re-read the artifact against each finding before deciding.
+
+Treat reviewer output as raw data, not a final verdict. Re-read the artifact and check the codebase against each finding before deciding.
 
 Classify every finding in this precedence order:
-1. Contract misread. The reviewer flagged an issue because the contract was incomplete or ambiguous. Update the contract and re-evaluate.
-2. Actionable defect. The finding identifies a real flaw. Fix the artifact and repeat the cycle.
-3. Conscious trade-off. The finding is accurate, but fixing it costs more than accepting the limitation. Document the trade-off explicitly for the user.
-4. Noise. The finding is incorrect because the reviewer lacked relevant context. Verify the codebase, then discard the finding.
+
+1. **Contract misread.** The reviewer flagged an issue because the contract was incomplete or ambiguous. Update the contract and re-run Step 3.
+2. **Actionable defect.** The finding identifies a real flaw. Fix the artifact and repeat the cycle from Step 1.
+3. **Conscious trade-off.** The finding is accurate, but fixing it costs more than accepting the limitation. Document the trade-off for the user.
+4. **Noise.** The finding is false because the reviewer lacked context. Verify against the codebase, discard the finding, and check whether adding that context to the contract would prevent the false finding.
+
+This step is complete when every finding has a verified classification and any actionable defect is fixed.
 
 ### 5. Stop conditions
+
 End the loop when any of these conditions occurs:
+
 - The reviewer returns only noise or trivial findings.
-- Three cycles finish without resolution. Stop and escalate the remaining issues to the user. Do not run a fourth cycle alone. Three unresolved cycles indicate the artifact is defective or too large.
+- Two or more cycles produce real findings with zero classified as actionable. Stop and escalate to the user.
+- Three cycles finish without resolution. Stop and escalate the remaining issues to the user. If the artifact is too large for three cycles, return to Step 2 and decompose the artifact instead of running a fourth.
 - The user accepts the artifact.
-
-## Operational traps
-
-- Leaking the claim. Sending the claim or author rationale to the reviewer primes it to agree.
-- Doubt theater. Completing two or more cycles with real findings without marking any finding as actionable.
-- Rubber-stamping. Accepting reviewer findings without verification against the codebase.
-- Post-hoc doubt. Running review after committing code. Doubt is an in-flight check, not a pull request gate.
-- Over-reviewing. Running Doubt on trivial edits. Reviewing routine edits wastes time and slows delivery.
